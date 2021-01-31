@@ -14,7 +14,7 @@
         <!-- 登陆部分 -->
         <a-tab-pane key="1" tab="登陆">
           <div class="item">
-            <a-input placeholder="用户名" size="large" allow-clear>
+            <a-input placeholder="用户名" size="large" v-model:value="logForm.account" allow-clear>
               <template v-slot:prefix>
                 <UserOutlined />
               </template>
@@ -22,7 +22,7 @@
           </div>
 
           <div class="item">
-            <a-input-password size="large"  placeholder="密码" />
+            <a-input-password size="large"  placeholder="密码" v-model:value="logForm.password" @keyup.enter.native="login" />
           </div>
 
           <div class="item">
@@ -30,7 +30,7 @@
           </div>
 
           <div class="item">
-            <a-button type="primary">登陆</a-button>
+            <a-button type="primary" @click="login">登陆</a-button>
           </div>
         </a-tab-pane>
 
@@ -49,11 +49,11 @@
           </div>
 
           <div class="item">
-            <a-input-password size="large"  placeholder="确认密码" />
+            <a-input-password size="large"  placeholder="确认密码" v-model:value="regForm.subPwd" />
           </div>
 
           <div class="item">
-            <a-input placeholder="邀请码" size="large" allow-clear>
+            <a-input placeholder="邀请码" size="large" allow-clear v-model:value="regForm.inviteCode">
               <template v-slot:prefix>
                 <DisconnectOutlined />
               </template>
