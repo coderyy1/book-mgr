@@ -1,5 +1,6 @@
 import { message } from 'ant-design-vue';
 
+// 回调处理
 export const result = (response, autoShowErrorMsg = true) => {
   const { data } = response;
 
@@ -31,3 +32,8 @@ export const result = (response, autoShowErrorMsg = true) => {
     }
   }
 }
+
+// 深拷贝
+export const clone = (obj) => {
+  return JSON.parse(JSON.stringify(obj));
+};  

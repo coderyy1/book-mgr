@@ -1,0 +1,85 @@
+
+.layout-basic {
+  .header {
+    height: 64px;
+    width: 100%;
+    position:fixed;
+    display: flex;
+    left: 0;
+    top: 0;
+    padding: 0 16px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+    z-index: 1;
+
+    .h-left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+      .l-info {
+        margin-left: 8px;
+        font-size: 22px;
+      }
+    }
+
+    .h-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+
+      .hello-msg {
+        margin-right: 18px;
+      }
+
+      .logout {
+        width: 80px;
+        height: 64px;
+        line-height: 64px;
+        text-align: center;
+        cursor: pointer;
+
+        -moz-user-select: none;
+        -o-user-select:none;
+        -khtml-user-select:none;
+        -webkit-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
+        
+        &:hover {
+          background-color: #ccc;
+        }
+      }
+    }
+  }
+
+  .header-placeholder {
+    height: 64px;
+    width: 100%;
+  }
+  
+  .content {
+    width: 100%;
+    display: flex;
+
+    .left {
+      width: 256px;
+      position: fixed;
+      top: 64px;
+      bottom: 0;
+      background-color: #f00;
+    }
+
+    .right {
+      flex: 1;
+      padding: 24px;
+      margin-left: 256px;
+    }
+  }
+}
