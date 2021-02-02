@@ -18,6 +18,21 @@ router.post('/add', async (ctx) => {
     publishDate
   } = getBody(ctx);
 
+  // 校验
+  if(name === '' ||
+    author === '' ||
+    classify === '' ||
+    price === '' ||
+    publishDate === '') {
+      ctx.body = {
+        code: 0,
+        msg: '添加失败',
+        data: null
+      };
+      
+      return;
+    }
+
   const book = new Book({
     name,
     author,
@@ -38,12 +53,36 @@ router.post('/add', async (ctx) => {
 
 // 获取全部书籍列表的接口
 router.get('/list', async (ctx) => {
-  const list = await Book.find().exec();
+
+  // 分页查询的参数
+  const {
+    page = 1,
+    size = 10,
+    keyword = ''
+  } = ctx.query;
+
+  const query = {};
+  if(keyword) {
+    query.name = keyword
+  }
+
+  const list = await Book
+    .find(query)
+    .skip((page - 1) * size)
+    .limit(size)
+    .exec();
+
+  const total = await Book.find(query).count();
 
   ctx.body = {
     code: 1,
     msg: '获取列表成功',
-    data: list
+    data: {
+      total,
+      list,
+      page,
+      size
+    }
   };
 });
 
