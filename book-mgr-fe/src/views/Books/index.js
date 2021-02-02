@@ -2,6 +2,7 @@ import { defineComponent, ref, onMounted } from 'vue';
 import Add from './Add/index.vue';
 import { book } from '@/network';
 import { result, formatTimestamp } from '@/helpers/utils';
+import { message, Modal } from 'ant-design-vue';
 
 
 export default defineComponent({
@@ -31,6 +32,12 @@ export default defineComponent({
         dataIndex: 'publishDate',
         slots: {
           customRender: 'publishDate'
+        }
+      },
+      {
+        title: '操作',
+        slots: {
+          customRender: 'actions'
         }
       }
     ];
@@ -101,6 +108,32 @@ export default defineComponent({
       showBack.value = false;
     }
 
+    // 删除书籍的底层方法
+    const remove = async (item) => {
+
+      const { _id } = item;
+      const res = await book.deleteBook(_id);
+      result(res)
+        .success((data) => {
+          message.success(data.msg);
+
+          getList();
+        })
+    }
+
+    // 删除按钮方法
+    const removeBook = (item) => {
+      Modal.confirm({
+        title: '确认删除该书籍吗？',
+        okText: '确认',
+        cancelText: '取消',
+        onCancel() {},
+        onOk(){
+          remove(item);
+        }
+      })
+    }
+
     
 
     return {
@@ -117,7 +150,8 @@ export default defineComponent({
       keyword,
       search,
       back,
-      showBack
+      showBack,
+      removeBook
     }
   }
 });

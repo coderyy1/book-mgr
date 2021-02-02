@@ -6,21 +6,36 @@
       <a-divider />
       <!-- 搜索框 -->
       <space-between>
-        <a-input-search
-          class="search"
-          placeholder="根据书名搜索"
-          v-model:value="keyword"
-          enter-button
-          allowClear
-          @search="search"
-        />
-        <a href="javascript:;" 
-          class="back"
-           @click="back"
-           v-if="showBack"
+        <!-- 下拉选择 -->
+        <!-- <a-select
+          v-model:value="value1"
+          style="width: 60px"
+          ref="select"
         >
-          返回
-        </a>
+          <a-select-option value="jack">
+            Jack
+          </a-select-option>
+          <a-select-option value="111">
+            111
+          </a-select-option>
+        </a-select>
+        {{value1}} -->
+        <div class="search-wrapper">
+          <a-input-search
+            class="search"
+            placeholder="根据书名搜索"
+            v-model:value="keyword"
+            enter-button
+            allowClear
+            @search="search"
+          />
+          <a href="javascript:;"
+            @click="back"
+            v-if="showBack"
+          >
+            返回
+          </a>
+        </div>
         <!-- 添加书籍按钮  -->
         <a-button @click="showAdd = true">添加书籍</a-button>
       </space-between>
@@ -35,6 +50,10 @@
       >
         <template #publishDate="data">
           {{ formatTimestamp(data.record.publishDate) }}
+        </template>
+
+        <template #actions="data">
+          <a href="javascript:;" @click="removeBook(data.text)">删除</a>
         </template>
       </a-table>
       <!-- 分页组件 -->

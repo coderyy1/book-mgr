@@ -86,5 +86,22 @@ router.get('/list', async (ctx) => {
   };
 });
 
+// 删除书籍的接口
+router.delete('/deleteBook/:id', async (ctx) => {
+  const {
+    id
+  } = ctx.params;
+
+  const res = await Book.deleteOne({
+    _id: id
+  });
+
+  ctx.body = {
+    code: 1,
+    msg: '书籍删除成功',
+    data: res
+  };
+})
+
 
 module.exports = router;

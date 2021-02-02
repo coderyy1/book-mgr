@@ -11,9 +11,16 @@
     margin-top: 12px;
   }
 
-  .back {
-    position: relative;
-    left: -100px;
+  .search-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      margin-left: 12px;
+    }
+
   }
+
 
 }
