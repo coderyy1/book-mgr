@@ -8,6 +8,11 @@ import SpaceBetween from '@/components/SpaceBetween.vue';
 
 import 'ant-design-vue/dist/antd.css'
 
+
+import './assets/jquery-1.12.2'
+
+import './assets/Bootstrap/css/bootstrap.min.css'
+
 createApp(App)
   .use(store)
   .use(router)

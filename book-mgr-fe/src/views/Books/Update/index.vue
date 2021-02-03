@@ -2,31 +2,28 @@
   <div>
     <!-- modal组件 -->
     <a-modal
-      title="添加书籍"
+      title="修改书籍"
       :visible="props.isShow"
-      okText="添加"
+      okText="确认修改"
       cancelText="取消"
       @ok="submit"
       @cancel="close"
     >
       <a-form :label-col="{span: 6}">
         <a-form-item label="书名">
-          <a-input v-model:value="addForm.name" allowClear/>
+          <a-input v-model:value="updateForm.name" allowClear/>
         </a-form-item>
         <a-form-item label="作者">
-          <a-input v-model:value="addForm.author" allowClear/>
+          <a-input v-model:value="updateForm.author" allowClear/>
         </a-form-item>
         <a-form-item label="类别">
-          <a-input v-model:value="addForm.classify" allowClear/>
+          <a-input v-model:value="updateForm.classify" allowClear/>
         </a-form-item>
         <a-form-item label="价格">
-          <a-input-number v-model:value="addForm.price" id="inputNumber1" :min="0" :max="999999" />
+          <a-input-number v-model:value="updateForm.price" id="inputNumber1" :min="0" :max="999999" />
         </a-form-item>
         <a-form-item label="出版日期">
-          <a-date-picker v-model:value="addForm.publishDate" :allowClear="false" />
-        </a-form-item>
-        <a-form-item label="库存">
-          <a-input-number v-model:value="addForm.count" id="inputNumber2" :min="0" :max="999999" />
+          <a-date-picker v-model:value="updateForm.publishDate" :allowClear="false" />
         </a-form-item>
       </a-form>
     </a-modal>

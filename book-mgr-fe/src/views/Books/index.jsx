@@ -1,13 +1,14 @@
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, reactive } from 'vue';
 import Add from './Add/index.vue';
+import Update from './Update/index.vue';
 import { book } from '@/network';
 import { result, formatTimestamp } from '@/helpers/utils';
-import { message, Modal } from 'ant-design-vue';
+import { message, Modal, Input } from 'ant-design-vue';
 
 
 export default defineComponent({
   components: {
-    Add
+    Add, Update
   },
   setup() {
     const column = [
@@ -35,6 +36,12 @@ export default defineComponent({
         }
       },
       {
+        title: '库存',
+        slots: {
+          customRender: 'count'
+        }
+      },
+      {
         title: '操作',
         slots: {
           customRender: 'actions'
@@ -52,6 +59,10 @@ export default defineComponent({
 
     // 控制modal显示
     const showAdd = ref(false);
+    const showUpdate = ref(false);
+
+    // 要传给修改modal中的数据
+    const currentBookInof = ref({});
 
     // 搜索
     const keyword = ref('');
@@ -134,7 +145,47 @@ export default defineComponent({
       })
     }
 
-    
+    // 显示入库出库弹窗
+    const editCount = (type, data) => {
+
+      let word = '增加';
+      if(type === 'OUT_COUNT') {
+        word = '减少';
+      }
+
+      Modal.confirm({
+        title: `要${word}多少库存?`,
+        content: (
+          <div>
+            <Input class="__book_input_count" />
+          </div>
+        ),
+        okText: '确认',
+        cancelText: '取消',
+        onOk: async () => {
+          const el = document.querySelector('.__book_input_count');
+
+          const res = await book.updateCount({
+            id: data._id,
+            type,
+            num: el.value
+          });
+
+          result(res)
+            .success(() => {
+              message.success(`成功${word}${el.value}本《${data.name}》`);
+              getList();
+            });
+        }
+      });
+    }
+
+    // 修改书籍方法
+    const updateBook = (data) => {
+      showUpdate.value = true;
+      currentBookInof.value = data;
+
+    }
 
     return {
       column,
@@ -151,7 +202,11 @@ export default defineComponent({
       search,
       back,
       showBack,
-      removeBook
+      removeBook,
+      editCount,
+      showUpdate,
+      updateBook,
+      currentBookInof
     }
   }
 });

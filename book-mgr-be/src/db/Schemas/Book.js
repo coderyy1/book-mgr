@@ -12,6 +12,8 @@ const BookSchema = new mongoose.Schema({
   price: Number,
   // 出版日期
   publishDate: String,
+  // 库存
+  count: Number,
 
   meta: getMate()
 });

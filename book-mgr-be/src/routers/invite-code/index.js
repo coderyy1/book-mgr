@@ -9,6 +9,7 @@ const router = new Router({
   prefix: '/invite'
 });
 
+// 添加邀请码的接口------------------------------------------------------------------------------------
 router.get('/add', async (ctx) => {
   const code = new InviteCode({
     code: uuidv4(),

@@ -53,7 +53,26 @@
         </template>
 
         <template #actions="data">
-          <a href="javascript:;" @click="removeBook(data.text)">删除</a>
+          <space-between>
+            <a href="javascript:;" 
+              class="btn btn-warning btn-sm"
+              @click="updateBook(data.text)">
+              修改
+            </a>
+            <a href="javascript:;"
+              class="btn btn-danger btn-sm"
+              @click="removeBook(data.text)">
+              删除
+            </a>
+          </space-between>
+        </template>
+
+        <template #count="data">
+          <space-between>
+            <a href="javascript:;" @click="editCount('OUT_COUNT', data.text)">出库</a>
+            {{ data.text.count }}
+            <a href="javascript:;" @click="editCount('IN_COUNT', data.text)">入库</a>
+          </space-between>
         </template>
       </a-table>
       <!-- 分页组件 -->
@@ -70,10 +89,13 @@
 
     <!-- 添加书籍的modal -->
     <add v-model:isShow="showAdd" @updateList="updateList" />
+
+    <!-- 修改书籍的modal -->
+    <update v-model:isShow="showUpdate" :info="currentBookInof" @updateList="updateList"/>
   </div>
 </template>
 
-<script src="./index.js"></script>
+<script src="./index.jsx"></script>
 
 <style lang="scss" scoped>
   @import './index.scss';
