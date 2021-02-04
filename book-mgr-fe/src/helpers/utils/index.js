@@ -38,19 +38,26 @@ export const clone = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };  
 
+// 填充0
+const timestampPadStart = (str) => {
+  str = String(str);
+
+  return str.padStart(2, '0');
+}
+
 // 格式化时间戳 -> YYYY/MM/DD hh:mm:ss
 export const formatTimestamp = (ts) => {
   const date = new Date(Number(ts));
 
   const YYYY = date.getFullYear();
-  const MM = (date.getMonth() + 1) < 10 ? ( '0' + (date.getMonth() + 1)): (date.getMonth() + 1);
-  const DD = (date.getDate()) < 10 ? ( '0' + (date.getDate())): (date.getDate());
+  const MM = timestampPadStart(date.getMonth() + 1);
+  const DD = timestampPadStart(date.getDate());
 
-  const hh = (date.getHours()) < 10 ? ( '0' + (date.getHours())): (date.getHours());
+  const hh = timestampPadStart(date.getHours());
 
-  const mm = (date.getMinutes()) < 10 ? ( '0' + (date.getMinutes())): (date.getMinutes());
+  const mm = timestampPadStart(date.getMinutes());
 
-  const ss = (date.getSeconds()) < 10 ? ( '0' + (date.getSeconds())): (date.getSeconds());
+  const ss = timestampPadStart(date.getSeconds());
 
   return `${YYYY}/${MM}/${DD} ${hh}:${mm}:${ss}`;
 };

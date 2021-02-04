@@ -1,0 +1,30 @@
+.info {
+
+  .item-row {
+    display: flex;
+    margin-bottom: 12px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-col {
+      display: flex;
+      flex: 1;
+      .title {
+        font-weight: 700;
+        min-width: 70px;
+      }
+  
+      .content {
+  
+      }
+    }
+  }
+}
+
+.log {
+  margin-top: 25px;
+  .pagi {
+    margin-top: 12px; 
+  }
+}

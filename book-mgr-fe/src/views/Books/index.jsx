@@ -1,4 +1,5 @@
-import { defineComponent, ref, onMounted, reactive } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Add from './Add/index.vue';
 import Update from './Update/index.vue';
 import { book } from '@/network';
@@ -70,6 +71,8 @@ export default defineComponent({
     // 显示返回
     const showBack = ref(false);
 
+    const router = useRouter();
+
     // 请求List
     const getList = async () => {
       const res = await book.list({
@@ -103,6 +106,7 @@ export default defineComponent({
       currentPage.value = page;
 
       getList();
+      // window.scrollTo(0, 0)
     };
 
     // 搜索书籍的方法
@@ -187,6 +191,13 @@ export default defineComponent({
 
     }
 
+    // 跳转详情页面
+    const gotoDetail = (data) => {
+      router.push({
+        path: `/books/${data._id}`
+      });
+    }
+
     return {
       column,
       showAdd,
@@ -206,7 +217,8 @@ export default defineComponent({
       editCount,
       showUpdate,
       updateBook,
-      currentBookInof
+      currentBookInof,
+      gotoDetail
     }
   }
 });

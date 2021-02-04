@@ -55,6 +55,11 @@
         <template #actions="data">
           <space-between>
             <a href="javascript:;" 
+              class="btn btn-success btn-sm"
+              @click="gotoDetail(data.text)">
+              详情
+            </a>
+            <a href="javascript:;" 
               class="btn btn-warning btn-sm"
               @click="updateBook(data.text)">
               修改

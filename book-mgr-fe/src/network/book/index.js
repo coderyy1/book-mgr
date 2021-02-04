@@ -26,3 +26,8 @@ export const updateCount = (data = {}) => {
 export const update = (data) => {
   return axios.post('http://localhost:3000/book/update', data);
 }
+
+// 详情页的请求
+export const detail = (id) => {
+  return axios.get(`http://localhost:3000/book/detail/${id}`);
+}

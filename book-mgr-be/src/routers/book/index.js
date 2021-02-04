@@ -10,6 +10,15 @@ const BOOK_CONST = {
 };
 
 const Book = mongoose.model('Book');
+const InventoryLog = mongoose.model('InventoryLog');
+
+const findBookOne = async (id) => {
+  const one = await Book.findOne({
+    _id: id
+  }).exec();
+
+  return one;
+}
 
 const router = new Router({
   prefix: '/book'
@@ -83,7 +92,7 @@ router.get('/list', async (ctx) => {
     .limit(size)
     .exec();
 
-  const total = await Book.find(query).count();
+  const total = await Book.find(query).countDocuments();
 
   ctx.body = {
     code: 1,
@@ -102,6 +111,17 @@ router.delete('/deleteBook/:id', async (ctx) => {
   const {
     id
   } = ctx.params;
+
+  const one = await findBookOne(id);
+  if(!one) {
+    ctx.body = {
+      code: 0,
+      msg: '没有该书籍',
+      data: null
+    };
+
+    return;
+  }
 
   const res = await Book.deleteOne({
     _id: id
@@ -127,9 +147,7 @@ router.post('/update/count', async (ctx) => {
 
   num = Number(num);
 
-  const book = await Book.findOne({
-    _id: id
-  }).exec();
+  const book = await findBookOne(id);
 
   // 没有该书籍
   if(!book) {
@@ -161,7 +179,16 @@ router.post('/update/count', async (ctx) => {
     return;
   }
 
-  const res = await (await book).save();
+  const res = await book.save();
+
+  const log = new InventoryLog({
+    bid: id,
+    type,
+    num: Math.abs(num),
+    user: ''
+  });
+
+  log.save();
 
   ctx.body = {
     code: 1,
@@ -178,9 +205,7 @@ router.post('/update', async (ctx) => {
     ...others
   } = getBody(ctx);
 
-  const one = await Book.findOne({
-    _id: id
-  }).exec();
+  const one = await findBookOne(id);
 
   if(!one) {
     ctx.body = {
@@ -213,5 +238,32 @@ router.post('/update', async (ctx) => {
   };
 
 });
+
+// 书籍详情页面接口---------------------------------------------------------------------------------------
+
+router.get('/detail/:id', async (ctx) => {
+  const {
+    id
+  } = ctx.params;
+
+  const one = await findBookOne(id);
+  if(!one) {
+    ctx.body = {
+      code: 0,
+      msg: '书籍不存在',
+      data: null
+    }
+
+    return;
+  }
+
+  ctx.body = {
+    code: 1,
+    msg: '成功找到该书籍',
+    data: one
+  };
+
+});
+
 
 module.exports = router;

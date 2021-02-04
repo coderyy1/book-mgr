@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { getMate } = require('../helpers');
+const { getMate, preSave } = require('../helpers');
 
 const InviteCodeSchema = new mongoose.Schema({
   code: String,
@@ -7,5 +7,7 @@ const InviteCodeSchema = new mongoose.Schema({
 
   meta: getMate()
 });
+
+InviteCodeSchema.pre('save', preSave);
 
 mongoose.model('InviteCode', InviteCodeSchema);
