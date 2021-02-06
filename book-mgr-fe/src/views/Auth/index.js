@@ -6,7 +6,8 @@ import { result } from '../../helpers/utils/index';
 import store from '@/store';
 import { getCharacterInfoById } from '@/helpers/character';
 import { useRouter } from 'vue-router';
-import { setToken } from '@/helpers/token/index';
+import { setToken, getToken } from '@/helpers/token/index';
+import axios from 'axios';
 
 export default defineComponent({
   components: {
@@ -94,6 +95,9 @@ export default defineComponent({
           store.commit('setUserCharacter', getCharacterInfoById(data.data.user.character));
           // 存储token -> sessionStorage
           setToken(data.data.token);
+
+          // 更新axios请求头内容
+          axios.defaults.headers['Authorization'] = `Bearer ${getToken()}`;
 
           router.replace('/books')
         });

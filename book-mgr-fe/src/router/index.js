@@ -51,6 +51,13 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  // 不能访问登陆页
+  if(to.path === '/auth') {
+    if(getToken()) {
+      next('/books');
+    }
+  }
+
   // 通过token获取用户信息 -> 只有不是从登陆页面来的才需要获取
   if(from.path !== '/auth') {
 
