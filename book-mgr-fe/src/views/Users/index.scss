@@ -1,0 +1,25 @@
+.pagi {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.tb-actions {
+  a {
+    &:last-of-type {
+      margin-left: 12px;
+    }
+  }
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+    align-items: center;
+    .search {
+      width: 250px;
+    }
+    a {
+      margin-left: 12px;
+    }
+}
