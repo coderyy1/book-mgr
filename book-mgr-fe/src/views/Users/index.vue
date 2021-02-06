@@ -36,6 +36,14 @@
         bordered
         :pagination="false"
       >
+        <template #character="data">
+          <a href="javascript:;"
+            @click="onEdit(data.text)"
+          >
+            <EditOutlined />
+          </a>
+          {{ getCharacterInfoById(data.text.character).title  }}
+        </template>
         <template #createdAt="data">
           {{ formatTimestamp(data.text.meta.createdAt) }}
         </template>
@@ -71,6 +79,28 @@
       v-model:isShow="showAdd"
       @updateList="getUserList"
     />
+
+    <!-- 修改角色信息的modal -->
+    <a-modal
+      v-model:visible="showCharacterModal"
+      title="修改角色"
+      okText="确认修改"
+      cancelText="取消"
+      @ok="updateCharacter"
+    >
+      <a-select
+        v-model:value="editForm.character"
+        style="width: 220px;"
+      >
+        <a-select-option 
+          v-for="item of characterInfo"
+          :key="item._id"
+          :value="item._id"
+        >
+          {{item.title}}
+        </a-select-option>
+      </a-select>
+    </a-modal>
   </div>
 </template>
 

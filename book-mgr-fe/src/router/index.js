@@ -1,4 +1,6 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import store from '@/store';
+import { getToken } from '@/helpers/token/index';
 
 const routes = [
   {
@@ -34,5 +36,30 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+router.beforeEach(async (to, from, next) => {
+
+  // 获取权限列表
+  if(!store.state.characterInfo.length) {
+      store.dispatch('getCharacterInfo');
+    }
+
+  // 登陆拦截
+  if(to.path !== '/auth') {
+    if(!getToken()) {
+      next('/auth');
+    }
+  }
+
+  // 通过token获取用户信息 -> 只有不是从登陆页面来的才需要获取
+  if(from.path !== '/auth') {
+
+    if(getToken()) {
+      store.dispatch('getUserInfo');
+    }
+  }
+
+  next();
+});
 
 export default router

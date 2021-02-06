@@ -1,12 +1,16 @@
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, reactive } from 'vue';
 import { result, formatTimestamp } from '@/helpers/utils';
+import { getCharacterInfoById } from '@/helpers/character';
 import { user } from '@/network';
 import { message, Modal } from 'ant-design-vue';
 import Add from './Add/index.vue';
+import { EditOutlined } from '@ant-design/icons-vue';
+import store from '@/store';
+
 
 export default defineComponent({
   components: {
-    Add
+    Add, EditOutlined
   },
   setup() {
 
@@ -16,8 +20,10 @@ export default defineComponent({
         dataIndex: 'account'
       },
       {
-        title: '权限',
-        dataIndex: ''
+        title: '角色',
+        slots: {
+          customRender: 'character'
+        }
       },
       {
         title: '创建日期',
@@ -42,6 +48,13 @@ export default defineComponent({
     const keyword = ref('');
 
     const showBack = ref(false);
+
+    const showCharacterModal = ref(false);
+
+    const editForm = reactive({
+      character: '',
+      current: {}
+    });
 
 
     // 获取用户list
@@ -108,6 +121,25 @@ export default defineComponent({
       showBack.value = false;
     }
 
+    // 修改角色
+    const onEdit = (record) => {
+      editForm.current = record;
+      editForm.character = record.character;
+      showCharacterModal.value = true;
+    }
+
+    const updateCharacter = async () => {
+      const res = await user.updateCharacter(editForm.character, editForm.current._id);
+      result(res)
+        .success((data) => {
+          message.success(data.msg);
+        });
+
+      showCharacterModal.value = false;
+
+      getUserList();
+    }
+
     onMounted(() => {
       getUserList();
     })
@@ -117,17 +149,25 @@ export default defineComponent({
       list,
       total,
       currentPage,
-      setPage,
       column,
       formatTimestamp,
-      remove,
       showAdd,
-      getUserList,
-      resetPwd,
       keyword,
-      search,
       showBack,
-      back
+      getCharacterInfoById,
+      showCharacterModal,
+      editForm,
+      characterInfo: store.state.characterInfo,
+
+
+      updateCharacter, 
+      onEdit,
+      back,
+      search,
+      resetPwd,
+      getUserList,
+      remove,
+      setPage
     }
   }
 });

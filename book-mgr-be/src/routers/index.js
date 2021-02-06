@@ -3,6 +3,7 @@ const inviteCode = require('./invite-code/index');
 const book  = require('./book/index');
 const inventoryLog  = require('./inventory-log/index');
 const user = require('./user/index');
+const character = require('./character/index');
 
 module.exports = (app) => {
   app.use(auth.routes());
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.use(book.routes());
   app.use(inventoryLog.routes());
   app.use(user.routes());
+  app.use(character.routes());
 };

@@ -2,14 +2,16 @@ const Router = require('@koa/router');
 const mongoose = require('mongoose');
 const { getBody } = require('../../helpers/utils/index');
 const config = require('../../project.config');
+const { verify, getToken } = require('../../helpers/token/index');
 
 const User = mongoose.model('User');
+const Character = mongoose.model('Character');
 
 const router = new Router({
   prefix: '/user'
 });
 
-// 查询用户列表的接口-------------------------------------------------
+// 查询用户列表的接口-----------------------------------------------------------------------------------------
 router.get('/list', async (ctx) => {
   let {
     keyword = '',
@@ -51,7 +53,7 @@ router.get('/list', async (ctx) => {
 
 });
 
-// 删除用户的接口---------------------------------------------------
+// 删除用户的接口---------------------------------------------------------------------------------------
 router.delete('/delete/:id', async (ctx) => {
   const {
     id
@@ -83,11 +85,12 @@ router.delete('/delete/:id', async (ctx) => {
 });
 
 
-// 添加用户的接口
+// 添加用户的接口------------------------------------------------------------------------------------------
 router.post('/add', async (ctx) => {
   const {
     account,
-    password
+    password,
+    character
   } = getBody(ctx);
 
   // 校验
@@ -118,10 +121,25 @@ router.post('/add', async (ctx) => {
     return;
   }
 
+  const char = await Character.findOne({
+    _id: character
+  }).exec();
+
+  if(!char) {
+    ctx.body = {
+      code: 0,
+      msg: '出错了',
+      data: null
+    };
+
+    return;
+  }
+
   // 创建
   const user = new User({
     account,
-    password
+    password,
+    character
   });
 
   const res = await user.save();
@@ -134,7 +152,7 @@ router.post('/add', async (ctx) => {
 });
 
 
-// 重置密码的接口
+// 重置密码的接口-----------------------------------------------------------------------------------------
 router.post('/reset/password', async (ctx) => {
   const {
     id
@@ -165,6 +183,62 @@ router.post('/reset/password', async (ctx) => {
       _id: res._id
     }
   };
+});
+
+// 修改用户角色的接口--------------------------------------------------------------------------------------
+router.post('/update/character', async (ctx) => {
+  const {
+    character,
+    userId
+  } = ctx.request.body;
+
+  const char = await Character.findOne({
+    _id: character
+  }).exec();
+
+  if(!char) {
+    ctx.body = {
+      code: 0,
+      msg: '出错了',
+      data: null
+    };
+
+    return;
+  }
+
+  const user = await User.findOne({
+    _id: userId
+  }).exec();
+
+  if(!user) {
+    ctx.body = {
+      code: 0,
+      msg: '出错了',
+      data: null
+    }
+
+    return;
+  }
+
+  user.character = character;
+
+  const res = await user.save();
+
+  ctx.body = {
+    code: 1,
+    msg: '修改成功',
+    data: res
+  };
+});
+
+
+// 通过token获取用户信息的接口----------------------------------------------------------------------
+router.get('/info', async (ctx) => {
+  ctx.body = {
+    data: await verify(getToken(ctx)),
+    code: 1,
+    msg: '获取成功'
+  }
 });
 
 module.exports = router;

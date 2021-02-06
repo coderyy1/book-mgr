@@ -27,3 +27,16 @@ export const resetPwd = (id) => {
     id
   });
 };
+
+// 修改用户角色的请求
+export const updateCharacter = (character, userId) => {
+  return axios.post('http://localhost:3000/user/update/character', {
+    character,
+    userId
+  });
+};
+
+// 通过token获取用户信息
+export const info = () => {
+  return axios.get('http://localhost:3000/user/info');
+};

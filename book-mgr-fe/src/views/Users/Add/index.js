@@ -2,10 +2,12 @@ import { defineComponent, reactive } from 'vue';
 import { user } from '@/network/index';
 import { result, clone } from '@/helpers/utils';
 import { message } from 'ant-design-vue';
+import store from '@/store';
 
 const defaultFormData = {
   account: '',
-  password: ''
+  password: '',
+  character: ''
 };
 
 export default defineComponent({
@@ -13,7 +15,13 @@ export default defineComponent({
     isShow: Boolean
   },
   setup(props, context) {
+    const { characterInfo } = store.state;
+
     const addForm = reactive(clone(defaultFormData));
+
+    addForm.character = characterInfo[1]._id;
+
+    
 
     const submit = async () => {
 
@@ -45,6 +53,8 @@ export default defineComponent({
         .success((data) => {
           // 重置表单
           Object.assign(addForm, defaultFormData);
+
+          addForm.character = characterInfo[1]._id;
           // 提示成功
           message.success(data.msg);
           // 更新list
@@ -63,7 +73,9 @@ export default defineComponent({
       addForm,
       submit,
       props,
-      close
+      close,
+      store,
+      characterInfo
     }
   }
 });

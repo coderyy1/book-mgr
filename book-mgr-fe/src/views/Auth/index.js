@@ -3,6 +3,10 @@ import { UserOutlined, DisconnectOutlined, LockOutlined } from '@ant-design/icon
 import { auth } from '@/network';
 import { message } from 'ant-design-vue';
 import { result } from '../../helpers/utils/index';
+import store from '@/store';
+import { getCharacterInfoById } from '@/helpers/character';
+import { useRouter } from 'vue-router';
+import { setToken } from '@/helpers/token/index';
 
 export default defineComponent({
   components: {
@@ -15,6 +19,8 @@ export default defineComponent({
       subPwd: '',
       inviteCode: ''
     });
+
+    const router = useRouter();
 
     const logForm = reactive({
       account: '',
@@ -83,6 +89,13 @@ export default defineComponent({
       result(res)
         .success((data) => {
           message.success(data.data.user.account + data.msg);
+          // 存储用户信息 -> vuex
+          store.commit('setUserInfo', data.data.user);
+          store.commit('setUserCharacter', getCharacterInfoById(data.data.user.character));
+          // 存储token -> sessionStorage
+          setToken(data.data.token);
+
+          router.replace('/books')
         });
     }
 
