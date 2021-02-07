@@ -3,7 +3,9 @@ const koaBody = require('koa-body');
 const { connect } = require('./db');
 const registerRoutes = require('./routers');
 const { middleware: koaJwtMiddleware } = require('./helpers/token');
+const { logMiddleware } = require('./helpers/log');
 const cors = require('@koa/cors')
+
 
 
 const app = new Koa();
@@ -11,7 +13,9 @@ const app = new Koa();
 connect().then(() => {
   app.use(cors());
   app.use(koaBody());
+  
   koaJwtMiddleware(app);
+  // app.use(logMiddleware);
   registerRoutes(app);
 
   app.listen(3000, () => {

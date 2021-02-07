@@ -51,6 +51,8 @@ export default defineComponent({
 
     const showCharacterModal = ref(false);
 
+    const loading = ref(true);
+
     const editForm = reactive({
       character: '',
       current: {}
@@ -59,11 +61,14 @@ export default defineComponent({
 
     // 获取用户list
     const getUserList = async () => {
+      loading.value = true;
       const res = await user.list(currentPage.value, 4, keyword.value);
       result(res)
         .success((data) => {
           list.value = data.list;
           total.value = data.total;
+
+          loading.value = false;
         });
     }
 
@@ -158,6 +163,7 @@ export default defineComponent({
       showCharacterModal,
       editForm,
       characterInfo: store.state.characterInfo,
+      loading,
 
 
       updateCharacter, 

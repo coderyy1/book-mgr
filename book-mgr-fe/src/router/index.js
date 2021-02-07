@@ -27,6 +27,11 @@ const routes = [
         path: '/user',
         name: 'User',
         component: () => import(/* webpackChunkName: "User" */'../views/Users/index.vue')
+      },
+      {
+        path: '/log',
+        name: 'Log',
+        component: () => import(/* webpackChunkName: "Log" */'../views/Log/index.vue')
       }
     ]
   }
@@ -39,9 +44,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
 
+
+
   // 获取权限列表
   if(!store.state.characterInfo.length) {
-      store.dispatch('getCharacterInfo');
+      await store.dispatch('getCharacterInfo');
     }
 
   // 登陆拦截
@@ -59,10 +66,10 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // 通过token获取用户信息 -> 只有不是从登陆页面来的才需要获取
-  if(from.path !== '/auth') {
+  if(from.path !== '/auth' && !store.state.userInfo.account) {
 
     if(getToken()) {
-      store.dispatch('getUserInfo');
+      await store.dispatch('getUserInfo');
     }
   }
 

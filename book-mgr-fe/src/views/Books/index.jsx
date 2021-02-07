@@ -15,7 +15,7 @@ export default defineComponent({
     const column = [
       {
         title: '书名',
-        dataIndex: 'name'
+        dataIndex: 'name',
       },
       {
         title: '作者',
@@ -73,8 +73,11 @@ export default defineComponent({
 
     const router = useRouter();
 
+    const loading = ref(true);
+
     // 请求List
     const getList = async () => {
+      loading.value = true;
       const res = await book.list({
         page: currentPage.value,
         keyword: keyword.value
@@ -88,6 +91,8 @@ export default defineComponent({
           } = data;
           list.value = l;
           total.value = t;
+
+          loading.value = false;
         });
     }
 
@@ -218,6 +223,7 @@ export default defineComponent({
       showUpdate,
       updateBook,
       currentBookInof,
+      loading,
       gotoDetail
     }
   }

@@ -23,6 +23,9 @@ export default defineComponent({
 
     const currentPage = ref(1);
 
+    const topLoading = ref(true);
+    const bottomLoading = ref(true);
+
     const logFlag = ref('IN_COUNT');
 
     const column = [
@@ -50,22 +53,27 @@ export default defineComponent({
 
     // 获取书籍信息的方法
     const getData = async (id) => {
+      topLoading.value = true;
       const res = await book.detail(id);
       result(res)
         .success(({data}) => {
           bookInfo.value = data;
+
+          topLoading.value = false;
         });
     }
 
     // 获取出入库日志的方法
     const getLogInfo = async () => {
-
+      bottomLoading.value = true;
       const res = await inventoryLog.getLog(id, logFlag.value, currentPage.value
       );
       result(res)
         .success((data) => {
           logInfo.value = data.list;
           total.value = data.total;
+
+          bottomLoading.value = false;
         });
     }
 
@@ -123,6 +131,8 @@ export default defineComponent({
       setPage,
       column,
       logFlag,
+      topLoading,
+      bottomLoading,
       toggleFlag
     }
   }

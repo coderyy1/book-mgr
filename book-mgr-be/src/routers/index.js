@@ -4,6 +4,7 @@ const book  = require('./book/index');
 const inventoryLog  = require('./inventory-log/index');
 const user = require('./user/index');
 const character = require('./character/index');
+const log = require('./log/index');
 
 module.exports = (app) => {
   app.use(auth.routes());
@@ -12,4 +13,5 @@ module.exports = (app) => {
   app.use(inventoryLog.routes());
   app.use(user.routes());
   app.use(character.routes());
+  app.use(log.routes());
 };
