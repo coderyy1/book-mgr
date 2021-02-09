@@ -1,7 +1,7 @@
 import { defineComponent, reactive } from 'vue';
 import { UserOutlined, DisconnectOutlined, LockOutlined } from '@ant-design/icons-vue';
-import { auth } from '@/network';
-import { message } from 'ant-design-vue';
+import { auth, reset } from '@/network';
+import { message, Modal, Input } from 'ant-design-vue';
 import { result } from '../../helpers/utils/index';
 import store from '@/store';
 import { getCharacterInfoById } from '@/helpers/character';
@@ -103,11 +103,38 @@ export default defineComponent({
         });
     }
 
+    // 忘记密码的方法
+    const resetPwd = () => {
+      Modal.confirm({
+        title: '请输入要重置密码的账号。',
+        okText: '确认',
+        cancelText: '取消',
+        content: (
+          <div>
+            <Input class="__book_input_count" />
+          </div>
+        ),
+        onOk: async () => {
+          const el = document.querySelector('.__book_input_count');
+
+          const res = await reset.add({
+            account: el.value
+          });
+          result(res)
+            .success(() => {
+              message.success('申请成功');
+            });
+        }
+
+      });
+    }
+
     return {
       regForm,
       logForm,
       register,
-      login
+      login,
+      resetPwd
     }
   }
 });

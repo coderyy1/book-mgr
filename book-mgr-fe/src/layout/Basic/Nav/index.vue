@@ -10,8 +10,10 @@
       :key="item.url"
       v-only-admin="item.onlyAdmin"
     >
+      <!-- 二级目录 -->
       <a-sub-menu
         v-if="item.children"
+        :key="item.title"
       >
         <template #title>
           <span>
@@ -20,11 +22,16 @@
             </span>
           </span>
         </template>
-        <!-- <a-menu-item-group key="g1">
-          <a-menu-item key="1">Option 1</a-menu-item>
-          <a-menu-item key="2">Option 2</a-menu-item>
-        </a-menu-item-group> -->
+        <!-- 二级目录Items -->
+        <a-menu-item 
+          :key="subItem.url"
+          v-for="subItem of item.children"
+          @click="to(subItem.url)"
+        >
+          {{subItem.title}}
+        </a-menu-item>
       </a-sub-menu>
+      <!-- 一级目录items -->
       <a-menu-item 
         @click="to(item.url)"
         :key="item.url" 

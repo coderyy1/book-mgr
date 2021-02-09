@@ -32,6 +32,16 @@ const routes = [
         path: '/log',
         name: 'Log',
         component: () => import(/* webpackChunkName: "Log" */'../views/Log/index.vue')
+      },
+      {
+        path: '/forget/password',
+        name: 'ForgetPassword',
+        component: () => import(/* webpackChunkName: "ForgetPassword" */'../views/RestPwd/index.vue')
+      },
+      {
+        path: '/invite',
+        name: 'Invite',
+        component: () => import(/* webpackChunkName: "Invite" */'../views/invite/index.vue')
       }
     ]
   }

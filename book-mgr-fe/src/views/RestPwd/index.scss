@@ -1,0 +1,14 @@
+.pagi {
+  display: flex;
+  justify-content: flex-end;
+
+  margin-top: 12px;
+}
+
+.actions-btn {
+  a {
+    &:last-of-type {
+      margin-left: 12px;
+    }
+  }
+}
