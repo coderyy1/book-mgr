@@ -138,7 +138,8 @@ router.delete('/deleteBook/:id', async (ctx) => {
 router.post('/update/count', async (ctx) => {
   const {
     id,
-    type
+    type,
+    user
   } = getBody(ctx);
 
   let {
@@ -185,7 +186,7 @@ router.post('/update/count', async (ctx) => {
     bid: id,
     type,
     num: Math.abs(num),
-    user: ''
+    user
   });
 
   log.save();

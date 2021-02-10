@@ -6,3 +6,4 @@ export * as character from './character';
 export * as log from './log';
 export * as reset from './forget-password';
 export * as invite from './invite-code';
+export * as classify from './book-classify';

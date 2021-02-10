@@ -17,7 +17,18 @@
           <a-input v-model:value="addForm.author" allowClear/>
         </a-form-item>
         <a-form-item label="类别">
-          <a-input v-model:value="addForm.classify" allowClear/>
+          <a-select
+          v-model:value="addForm.classify"
+            style="width: 220px;"
+          >
+            <a-select-option 
+              v-for="(item, index) of props.classify"
+              :key="index"
+              :value="item.title"
+            >
+              {{item.title}}
+            </a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="价格">
           <a-input-number v-model:value="addForm.price" id="inputNumber1" :min="0" :max="999999" />

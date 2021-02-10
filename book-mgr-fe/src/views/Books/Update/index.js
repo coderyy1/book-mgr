@@ -8,7 +8,8 @@ import moment from 'moment';
 export default defineComponent({
   props: {
     isShow: Boolean,
-    info:  Object
+    info:  Object,
+    classify: Array
   },
   setup(props, context) {
     const updateForm = reactive({

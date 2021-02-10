@@ -11,6 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'BasicLayout',
+    redirect: '/auth',
     component: () => import(/* webpackChunkName: "BasicLayout" */'../layout/Basic/index.vue'),
     children: [
       {
@@ -42,6 +43,11 @@ const routes = [
         path: '/invite',
         name: 'Invite',
         component: () => import(/* webpackChunkName: "Invite" */'../views/invite/index.vue')
+      },
+      {
+        path: '/bookclassify',
+        name: 'BookClassify',
+        component: () => import(/* webpackChunkName: "BookClassify" */'../views/BookClassify/index.vue')
       }
     ]
   }
@@ -65,14 +71,14 @@ router.beforeEach(async (to, from, next) => {
   if(to.path !== '/auth') {
     if(!getToken()) {
       next('/auth');
+      return;
     }
   }
 
   // 不能访问登陆页
-  if(to.path === '/auth') {
-    if(getToken()) {
+  if(to.path === '/auth' && getToken()) {
       next('/books');
-    }
+      return;
   }
 
   // 通过token获取用户信息 -> 只有不是从登陆页面来的才需要获取

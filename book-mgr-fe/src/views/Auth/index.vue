@@ -10,7 +10,7 @@
 
     <!-- 表单 -->
     <div class="form">
-      <a-tabs @change="callback">
+      <a-tabs >
         <!-- 登陆部分 -->
         <a-tab-pane key="1" tab="登陆">
           <div class="item">

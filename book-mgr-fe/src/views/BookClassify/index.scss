@@ -1,0 +1,13 @@
+.ip {
+  display: flex;
+  .input-el {
+    width: 320px;
+    margin-right: 12px;
+  }
+}
+
+.actions {
+  a:first-of-type {
+    margin-right: 12px;
+  }
+}

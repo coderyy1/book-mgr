@@ -5,6 +5,7 @@ require('./Schemas/InventoryLog');
 require('./Schemas/Character');
 require('./Schemas/Log');
 require('./Schemas/ForgetPassword');
+require('./Schemas/BookClassify');
 const mongoose = require('mongoose');
 
 const connect = () => {

@@ -2,9 +2,10 @@ import { defineComponent, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Add from './Add/index.vue';
 import Update from './Update/index.vue';
-import { book } from '@/network';
+import { book, classify } from '@/network';
 import { result, formatTimestamp } from '@/helpers/utils';
 import { message, Modal, Input } from 'ant-design-vue';
+import { useStore } from 'vuex';
 
 
 export default defineComponent({
@@ -55,6 +56,8 @@ export default defineComponent({
 
     const total = ref(0);
 
+    const store = useStore();
+
     // 当前页数
     const currentPage = ref(1);
 
@@ -74,6 +77,17 @@ export default defineComponent({
     const router = useRouter();
 
     const loading = ref(true);
+
+    const classifyList = ref([]);
+
+    // 获取分类列表
+    const getClassify = async () => {
+      const res = await classify.list();
+      result(res)
+        .success((data) => {
+          classifyList.value = data.data;
+        });
+    }
 
     // 请求List
     const getList = async () => {
@@ -98,6 +112,7 @@ export default defineComponent({
 
     // 获取书籍list
     onMounted( () => {
+      getClassify();
       getList();
     });
 
@@ -177,7 +192,8 @@ export default defineComponent({
           const res = await book.updateCount({
             id: data._id,
             type,
-            num: el.value
+            num: el.value,
+            user: store.state.userInfo.account
           });
 
           result(res)
@@ -207,24 +223,27 @@ export default defineComponent({
       column,
       showAdd,
       list,
-      updateList,
+      keyword,
       formatTimestamp,
-
+      showBack,
       currentPage,
       total,
-      setPage,
-
-      keyword,
-      search,
-      back,
-      showBack,
-      removeBook,
-      editCount,
       showUpdate,
-      updateBook,
       currentBookInof,
       loading,
-      gotoDetail
+      classifyList,
+
+
+
+      setPage,
+      updateList,
+      search,
+      back,
+      removeBook,
+      editCount,
+      updateBook,
+      gotoDetail,
+      getClassify
     }
   }
 });

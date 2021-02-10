@@ -97,10 +97,19 @@
     </a-spin>
 
     <!-- 添加书籍的modal -->
-    <add v-model:isShow="showAdd" @updateList="updateList" />
+    <add 
+      v-model:isShow="showAdd"
+      @updateList="updateList" 
+      :classify="classifyList"
+    />
 
     <!-- 修改书籍的modal -->
-    <update v-model:isShow="showUpdate" :info="currentBookInof" @updateList="updateList"/>
+    <update 
+      v-model:isShow="showUpdate" 
+      :info="currentBookInof"
+      @updateList="updateList"
+      :classify="classifyList"
+    />
   </div>
 </template>
 

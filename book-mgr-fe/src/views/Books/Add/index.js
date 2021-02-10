@@ -14,7 +14,8 @@ const defaultFormData = {
 
 export default defineComponent({
   props: {
-    isShow: Boolean
+    isShow: Boolean,
+    classify: Array
   },
   setup(props, context) {
     const addForm = reactive(clone(defaultFormData));

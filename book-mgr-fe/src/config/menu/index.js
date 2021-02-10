@@ -27,6 +27,11 @@ export default [
         title: '邀请码列表',
         url: '/invite',
         onlyAdmin: true
+      },
+      {
+        title: '分类管理',
+        url: '/bookclassify',
+        onlyAdmin: true
       }
     ]
   }
