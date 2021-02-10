@@ -7,6 +7,7 @@ const character = require('./character/index');
 const log = require('./log/index');
 const forgetPassword = require('./forgetpassword/index');
 const bookClassify = require('./book-classify/index');
+const profile = require('./profile/index');
 
 module.exports = (app) => {
   app.use(auth.routes());
@@ -18,4 +19,5 @@ module.exports = (app) => {
   app.use(log.routes());
   app.use(forgetPassword.routes());
   app.use(bookClassify.routes());
+  app.use(profile.routes());
 };

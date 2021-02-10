@@ -34,5 +34,10 @@ export default [
         onlyAdmin: true
       }
     ]
+  },
+  {
+    title: '个人设置',
+    url: '/profile',
+    onlyAdmin: false
   }
 ]

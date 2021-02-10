@@ -6,8 +6,10 @@
         <div class="l-info">图书管理系统</div>
       </div>
       <div class="h-right">
-        <div class="hello-msg">XXX</div>
-        <div class="logout">退出</div>
+        <div class="hello-msg">
+          {{ `${store.state.userInfo.account},欢迎！` }}
+        </div>
+        <div class="logout" @click="logout">退出</div>
       </div>
     </div>
     <div class="header-placeholder"></div>

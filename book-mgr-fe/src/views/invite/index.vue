@@ -5,7 +5,7 @@
         <h2>邀请码列表</h2>
         <div class="add">
           <a-input v-model:value="count" class="ip"></a-input>
-          <a-button @click="addCode">添加</a-button>
+          <a-button type="primary" @click="addCode">添加</a-button>
         </div>
       </space-between>
       <a-divider />
