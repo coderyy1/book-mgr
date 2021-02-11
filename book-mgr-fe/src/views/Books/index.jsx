@@ -9,10 +9,13 @@ import { useStore } from 'vuex';
 
 
 export default defineComponent({
+  props: {
+    simple: Boolean
+  },
   components: {
     Add, Update
   },
-  setup() {
+  setup(props) {
     const column = [
       {
         title: '书名',
@@ -42,14 +45,18 @@ export default defineComponent({
         slots: {
           customRender: 'count'
         }
-      },
-      {
-        title: '操作',
-        slots: {
-          customRender: 'actions'
-        }
       }
     ];
+
+    if(!props.simple) {
+      column.push(
+        {
+          title: '操作',
+          slots: {
+            customRender: 'actions'
+          }
+        });
+    }
 
     // 书籍list信息
     const list = ref([]);
@@ -232,6 +239,7 @@ export default defineComponent({
       currentBookInof,
       loading,
       classifyList,
+      simple: props.simple,
 
 
 

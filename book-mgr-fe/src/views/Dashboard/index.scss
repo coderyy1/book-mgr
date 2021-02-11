@@ -1,0 +1,28 @@
+.total-info {
+  margin-bottom: 24px;
+  .num {
+    font-size: 24px;
+  }
+}
+
+.total-list {
+  display: flex;
+  .total-item {
+    flex: 1;
+  }
+}
+
+.table-info {
+  position: relative;
+  display: flex;
+  .t-book {
+    flex: 1;
+    width: 50%;
+    margin-right: 12px;
+  }
+  .t-log {
+    flex: 1;
+    width: 50%;
+    margin-left: 12px;
+  }
+}

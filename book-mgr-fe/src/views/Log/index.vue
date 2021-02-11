@@ -1,21 +1,24 @@
 <template>
   <div>
     <a-spin :spinning="loading">
-      <a-card>
-        <div class="title">
-          <h2>操作日志</h2>
+      <a-card :title="simple ? '最近操作日志' : ''">
+        <div v-if="!simple">
+          <div class="title">
+            <h2>操作日志</h2>
+          </div>
+          <a-divider />
         </div>
-        <a-divider />
         <a-table
           rowKey="_id" 
           :columns="column" 
           :data-source="list" 
           bordered
           :pagination="false"
+          :scroll="{ x: 'max-content' }"
         >
 
         </a-table>
-        <div class="pagi">
+        <div class="pagi" v-if="!simple">
           <a-pagination 
             v-model:current="currentPage"
             :total="total"

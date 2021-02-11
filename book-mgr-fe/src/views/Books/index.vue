@@ -1,46 +1,50 @@
 <template>
   <div class="wrapper">
     <a-spin :spinning="loading">
-      <a-card>
-        <!-- 标题 -->
-        <h2 class="title">图书列表</h2>
-        <a-divider />
-        <!-- 搜索框 -->
-        <space-between>
-          <!-- 下拉选择 -->
-          <!-- <a-select
-            v-model:value="value1"
-            style="width: 60px"
-            ref="select"
-          >
-            <a-select-option value="jack">
-              Jack
-            </a-select-option>
-            <a-select-option value="111">
-              111
-            </a-select-option>
-          </a-select>
-          {{value1}} -->
-          <div class="search-wrapper">
-            <a-input-search
-              class="search"
-              placeholder="根据书名搜索"
-              v-model:value="keyword"
-              enter-button
-              allowClear
-              @search="search"
-            />
-            <a href="javascript:;"
-              @click="back"
-              v-if="showBack"
+      <a-card 
+        :title="simple ? '最近添加的图书' : ''"
+      >
+        <div v-if="!simple">
+          <!-- 标题 -->
+          <h2 class="title">图书列表</h2>
+          <a-divider />
+          <!-- 搜索框 -->
+          <space-between>
+            <!-- 下拉选择 -->
+            <!-- <a-select
+              v-model:value="value1"
+              style="width: 60px"
+              ref="select"
             >
-              返回
-            </a>
-          </div>
-          <!-- 添加书籍按钮  -->
-          <a-button @click="showAdd = true" v-only-admin>添加书籍</a-button>
-        </space-between>
-        <a-divider />
+              <a-select-option value="jack">
+                Jack
+              </a-select-option>
+              <a-select-option value="111">
+                111
+              </a-select-option>
+            </a-select>
+            {{value1}} -->
+            <div class="search-wrapper">
+              <a-input-search
+                class="search"
+                placeholder="根据书名搜索"
+                v-model:value="keyword"
+                enter-button
+                allowClear
+                @search="search"
+              />
+              <a href="javascript:;"
+                @click="back"
+                v-if="showBack"
+              >
+                返回
+              </a>
+            </div>
+            <!-- 添加书籍按钮  -->
+            <a-button @click="showAdd = true" v-only-admin>添加书籍</a-button>
+          </space-between>
+          <a-divider />
+        </div>
         <!-- 表格 -->
         <a-table 
           rowKey="_id" 
@@ -48,12 +52,13 @@
           :data-source="list" 
           bordered
           :pagination="false"
+          :scroll="{ x: 'max-content' }"
         >
           <template #publishDate="data">
             {{ formatTimestamp(data.record.publishDate) }}
           </template>
 
-          <template #actions="data">
+          <template #actions="data" v-if="!simple">
             <space-between>
               <a href="javascript:;" 
                 class="btn btn-success btn-sm"
@@ -84,7 +89,7 @@
           </template>
         </a-table>
         <!-- 分页组件 -->
-        <space-between class="pagi">
+        <space-between v-if="!simple" class="pagi">
           <div></div>
           <a-pagination 
             v-model:current="currentPage"

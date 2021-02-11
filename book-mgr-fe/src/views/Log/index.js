@@ -4,7 +4,10 @@ import { result } from '@/helpers/utils/index.js';
 import { getLogInfoByPath } from '@/helpers/log/index.js';
 
 export default defineComponent({
-  setup() {
+  props: {
+    simple: Boolean
+  },
+  setup(props) {
     const column = [
       {
         title: '用户名',
@@ -53,11 +56,12 @@ export default defineComponent({
       list,
       currentPage,
       total,
-
+      loading,
+      simple: props.simple,
 
       getList,
-      setPage,
-      loading
+      setPage
+      
     }
   }
 });
