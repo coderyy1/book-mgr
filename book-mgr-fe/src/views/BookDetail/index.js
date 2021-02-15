@@ -4,6 +4,7 @@ import { book, inventoryLog } from '@/network';
 import { result, formatTimestamp } from '@/helpers/utils';
 import { message, Modal } from 'ant-design-vue';
 import Update from '../Books/Update/index.vue';
+import { getClassifyTitleById } from '@/helpers/classify/index';
 
 export default defineComponent({
   components: {
@@ -133,7 +134,8 @@ export default defineComponent({
       logFlag,
       topLoading,
       bottomLoading,
-      toggleFlag
+      toggleFlag,
+      getClassifyTitleById
     }
   }
 });

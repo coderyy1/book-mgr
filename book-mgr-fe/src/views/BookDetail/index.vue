@@ -29,7 +29,7 @@
             </div>
             <div class="item-col">
               <div class="title">分类</div>
-              <div class="content">{{ b.classify }}</div>
+              <div class="content">{{ getClassifyTitleById(b.classify) }}</div>
             </div>
           </div>
           <div class="item-row">

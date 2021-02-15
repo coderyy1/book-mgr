@@ -2,6 +2,7 @@ import { defineComponent, ref, onMounted } from 'vue';
 import { classify } from '@/network';
 import { result } from '@/helpers/utils';
 import { message, Modal, Input } from 'ant-design-vue';
+import store from '@/store';
 export default defineComponent({
   setup() {
     const column = [
@@ -71,7 +72,7 @@ export default defineComponent({
     const updateClassify = (id) => {
       Modal.confirm({
         title: '修改分类信息',
-        okText: '确认删除',
+        okText: '确认修改',
         cancelText: '取消',
         content: (
           <div>

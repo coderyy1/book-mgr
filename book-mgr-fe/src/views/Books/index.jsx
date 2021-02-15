@@ -6,6 +6,7 @@ import { book, classify } from '@/network';
 import { result, formatTimestamp } from '@/helpers/utils';
 import { message, Modal, Input } from 'ant-design-vue';
 import { useStore } from 'vuex';
+import { getClassifyTitleById } from '@/helpers/classify/index';
 
 
 export default defineComponent({
@@ -27,7 +28,9 @@ export default defineComponent({
       },
       {
         title: '类别',
-        dataIndex: 'classify'
+        slots: {
+          customRender: 'classify'
+        }
       },
       {
         title: '价格',
@@ -35,6 +38,10 @@ export default defineComponent({
       },
       {
         title: '出版日期',
+        dataIndex: 'publishDate',
+        slots: {
+          customRender: 'publishDate'
+        },
         dataIndex: 'publishDate',
         slots: {
           customRender: 'publishDate'
@@ -118,8 +125,8 @@ export default defineComponent({
     }
 
     // 获取书籍list
-    onMounted( () => {
-      getClassify();
+    onMounted(async () => {
+      await getClassify();
       getList();
     });
 
@@ -267,7 +274,8 @@ export default defineComponent({
       updateBook,
       gotoDetail,
       getClassify,
-      onUploadChange
+      onUploadChange,
+      getClassifyTitleById
     }
   }
 });

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { character, user } from '@/network';
+import { character, user, classify } from '@/network';
 import { result } from '@/helpers/utils';
 import { getCharacterInfoById } from '@/helpers/character';
 
@@ -7,7 +7,8 @@ export default createStore({
   state: {
     characterInfo: [],
     userInfo: {},
-    userCharacter: {}
+    userCharacter: {},
+    classifyInfo: []
   },
   mutations: {
     setCharacterInfo(state, characterInfo) {
@@ -18,6 +19,9 @@ export default createStore({
     },
     setUserCharacter(state, userCharacter) {
       state.userCharacter = userCharacter;
+    },
+    setClassifyInfo(state, classify) {
+      state.classifyInfo = classify;
     }
   },
   actions: {
@@ -36,6 +40,15 @@ export default createStore({
         .success(({ data }) => {
           store.commit('setUserInfo', data);
           store.commit('setUserCharacter', getCharacterInfoById(data.character));
+        });
+    },
+
+    async getClassifyInfo(store) {
+      const res = await classify.list();
+
+      result(res)
+        .success(({ data }) => {
+          store.commit('setClassifyInfo', data);
         });
     }
   },

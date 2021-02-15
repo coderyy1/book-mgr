@@ -70,6 +70,9 @@
           <template #publishDate="data">
             {{ formatTimestamp(data.record.publishDate) }}
           </template>
+          <template #classify="data">
+            {{ getClassifyTitleById(data.record.classify) }}
+          </template>
 
           <template #actions="data" v-if="!simple">
             <space-between>

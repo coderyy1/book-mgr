@@ -304,14 +304,14 @@ router.post('/addMany', async (ctx) => {
       count
     ] = record;
 
-    let classifyTitle = classify;
+    let classifyId = classify;
 
     const one = await BookClassify.findOne({
       title: classify
     });
 
     if(one) {
-      classifyTitle = one.title;
+      classifyId = one._id;
     }
 
     
@@ -320,7 +320,7 @@ router.post('/addMany', async (ctx) => {
       price,
       author,
       publishDate,
-      classify: classifyTitle,
+      classify: classifyId,
       count
     });
     num++;

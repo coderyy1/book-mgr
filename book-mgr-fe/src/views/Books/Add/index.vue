@@ -24,7 +24,7 @@
             <a-select-option 
               v-for="(item, index) of props.classify"
               :key="index"
-              :value="item.title"
+              :value="item._id"
             >
               {{item.title}}
             </a-select-option>

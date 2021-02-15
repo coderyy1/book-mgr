@@ -85,7 +85,11 @@ router.beforeEach(async (to, from, next) => {
       message.error('认证失败，请重新登录');
       return;
     }
+    // 获取分类信息
+    await store.dispatch('getClassifyInfo');
   }
+
+
 
   // 不能访问登陆页
   if(to.path === '/auth' && getToken()) {
