@@ -12,9 +12,14 @@ const app = new Koa();
 
 connect().then(() => {
   app.use(cors());
-  app.use(koaBody());
+  app.use(koaBody({
+    multipart: true,
+    formidable: {
+      maxFileSize: 200 * 1024 * 1024
+    }
+  }));
   
-  koaJwtMiddleware(app);
+  // koaJwtMiddleware(app);
   // app.use(logMiddleware);
   registerRoutes(app);
 

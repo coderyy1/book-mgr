@@ -9,6 +9,7 @@ const forgetPassword = require('./forgetpassword/index');
 const bookClassify = require('./book-classify/index');
 const profile = require('./profile/index');
 const dashboard = require('./dashboard/index');
+const upload = require('./upload/index');
 
 module.exports = (app) => {
   app.use(auth.routes());
@@ -22,4 +23,5 @@ module.exports = (app) => {
   app.use(bookClassify.routes());
   app.use(profile.routes());
   app.use(dashboard.routes());
+  app.use(upload.routes());
 };

@@ -24,9 +24,19 @@
                 返回
               </a>
             </div>
-            <a-button @click="showAdd = true">
-              添加用户
-            </a-button>
+            <div class="actions-add">
+              <a-button @click="showAdd = true">
+                添加用户
+              </a-button>
+              <a-upload
+                action="http://localhost:3000/upload/file"
+                @change="onUploadChange"
+              >
+                <a-button type="primary">
+                  上传 Excel
+                </a-button>
+              </a-upload>
+            </div>
           </space-between>
         </div>
         <a-divider />

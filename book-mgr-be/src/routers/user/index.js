@@ -7,6 +7,8 @@ const { verify, getToken } = require('../../helpers/token/index');
 const User = mongoose.model('User');
 const Character = mongoose.model('Character');
 
+const { loadExcel, getFirstSheet } = require('../../helpers/excel/index');
+
 const router = new Router({
   prefix: '/user'
 });
@@ -239,6 +241,62 @@ router.get('/info', async (ctx) => {
     code: 1,
     msg: '获取成功'
   }
+});
+
+
+// 批量添加用户的接口-----------------------------------------------------
+router.post('/addMany', async (ctx) => {
+  const {
+    key = ''
+  } = ctx.request.body;
+
+  // 获取文件路径
+  const path = `${config.UPLOAD_DIR}/${key}`;
+  // 解析excel
+  const excel = loadExcel(path);
+  const sheet = getFirstSheet(excel);
+
+  // 查询角色列表
+  const character = await Character.find().exec();
+
+  const member = character.find((item) => (
+    item.name === 'member'
+  ));
+
+  // 遍历sheet,插入表中
+  const arr = [];
+  let num = 0;
+  for (let i = 0; i < sheet.length; i++) {
+    let record = sheet[i];
+
+    const [account, password = config.DEFAULT_PASSWORD] = record;
+
+    const one = await User.findOne({
+      account,
+    })
+
+    if (one) {
+      continue;
+    }
+
+    arr.push({
+      account,
+      password,
+      character: member._id,
+    });
+    num++;
+  }
+
+  const res = await User.insertMany(arr);
+
+  ctx.body = {
+    code: 1,
+    msg: '添加成功',
+    data: {
+      addCount: num
+    }
+  }
+
 });
 
 module.exports = router;

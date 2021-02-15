@@ -145,6 +145,21 @@ export default defineComponent({
       getUserList();
     }
 
+    // 上传组件的change事件方法
+    const onUploadChange = ({ file }) => {
+      if(file.response) {
+        result(file.response)
+          .success(async (key) => {
+            const res = await user.addMany(key);
+            result(res)
+              .success((data) => {
+                message.success(`成功添加${data.data.addCount}位用户`);
+                getUserList();
+              });
+          });
+      }
+    }
+
     onMounted(() => {
       getUserList();
     })
@@ -173,7 +188,8 @@ export default defineComponent({
       resetPwd,
       getUserList,
       remove,
-      setPage
+      setPage,
+      onUploadChange
     }
   }
 });

@@ -36,7 +36,14 @@ export const updateCharacter = (character, userId) => {
   });
 };
 
-// 通过token获取用户信息
+// 通过token获取用户信息的请求
 export const info = () => {
   return axios.get('http://localhost:3000/user/info');
 };
+
+// excel批量添加用户的请求
+export const addMany = (key) => {
+  return axios.post('http://localhost:3000/user/addMany', {
+    key
+  });
+}
