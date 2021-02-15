@@ -1,6 +1,8 @@
 const Router = require('@koa/router');
 const mongoose = require('mongoose');
 const { getBody } = require('../../helpers/utils/index');
+const { loadExcel, getFirstSheet } = require('../../helpers/excel/index');
+const config = require('../../project.config');
 
 // 常量==========================================================================================
 // 用于判断出库还是入库的常量
@@ -11,6 +13,7 @@ const BOOK_CONST = {
 
 const Book = mongoose.model('Book');
 const InventoryLog = mongoose.model('InventoryLog');
+const BookClassify = mongoose.model('BookClassify');
 
 const findBookOne = async (id) => {
   const one = await Book.findOne({
@@ -266,6 +269,72 @@ router.get('/detail/:id', async (ctx) => {
     msg: '成功找到该书籍',
     data: one
   };
+
+});
+
+// 批量添加书籍的接口-----------------------------------------------------
+router.post('/addMany', async (ctx) => {
+  const {
+    key = ''
+  } = ctx.request.body;
+
+  // 获取文件路径
+  const path = `${config.UPLOAD_DIR}/${key}`;
+  // 解析excel
+  const excel = loadExcel(path);
+  const sheet = getFirstSheet(excel);
+
+  // 查询分类列表
+  
+
+  
+
+  // 遍历sheet,插入表中
+  const arr = [];
+  let num = 0;
+  for (let i = 0; i < sheet.length; i++) {
+    let record = sheet[i];
+
+    const [
+      name,
+      price,
+      author,
+      publishDate,
+      classify,
+      count
+    ] = record;
+
+    let classifyTitle = classify;
+
+    const one = await BookClassify.findOne({
+      title: classify
+    });
+
+    if(one) {
+      classifyTitle = one.title;
+    }
+
+    
+    arr.push({
+      name,
+      price,
+      author,
+      publishDate,
+      classify: classifyTitle,
+      count
+    });
+    num++;
+  }
+
+  const res = await Book.insertMany(arr);
+
+  ctx.body = {
+    code: 1,
+    msg: '添加成功',
+    data: {
+      addCount: num
+    }
+  }
 
 });
 

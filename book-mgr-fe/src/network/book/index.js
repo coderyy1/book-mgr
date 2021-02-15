@@ -34,3 +34,10 @@ export const update = (data) => {
 export const detail = (id) => {
   return axios.get(`http://localhost:3000/book/detail/${id}`);
 }
+
+// excel批量添加书籍的请求
+export const addMany = (key) => {
+  return axios.post('http://localhost:3000/book/addMany', {
+    key
+  });
+}

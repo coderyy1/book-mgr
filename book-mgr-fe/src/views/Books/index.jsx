@@ -226,6 +226,21 @@ export default defineComponent({
       });
     }
 
+    // 上传组件的change事件方法
+    const onUploadChange = ({ file }) => {
+      if(file.response) {
+        result(file.response)
+          .success(async (key) => {
+            const res = await book.addMany(key);
+            result(res)
+              .success((data) => {
+                message.success(`成功添加${data.data.addCount}本书`);
+                getList();
+              });
+          });
+      }
+    }
+
     return {
       column,
       showAdd,
@@ -251,7 +266,8 @@ export default defineComponent({
       editCount,
       updateBook,
       gotoDetail,
-      getClassify
+      getClassify,
+      onUploadChange
     }
   }
 });

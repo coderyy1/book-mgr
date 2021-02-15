@@ -41,7 +41,20 @@
               </a>
             </div>
             <!-- 添加书籍按钮  -->
-            <a-button @click="showAdd = true" v-only-admin>添加书籍</a-button>
+            <div>
+              <a-button @click="showAdd = true" v-only-admin>
+                添加书籍
+              </a-button>
+              &nbsp;
+              <a-upload
+                action="http://localhost:3000/upload/file"
+                @change="onUploadChange"
+              >
+                <a-button type="primary">
+                  上传 Excel
+                </a-button>
+              </a-upload>
+            </div>
           </space-between>
           <a-divider />
         </div>
