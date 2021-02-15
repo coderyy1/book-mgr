@@ -1,43 +1,38 @@
-import axios from 'axios';
-import { getToken } from '@/helpers/token/index'
-
-axios.defaults.headers['Authorization'] = `Bearer ${getToken()}`;
+import { del, get, post } from '@/helpers/request/index';
 
 // 添加书籍的请求
 export const add = (form) => {
-  return axios.post('http://localhost:3000/book/add', form);
+  return post('/book/add', form);
 };
 
 // 查询书籍的请求
 export const list = (data) => {
-  return axios.get('http://localhost:3000/book/list', {
-    params: data
-  });
+  return get('/book/list', data);
 }
 
 // 删除书籍的请求
 export const deleteBook = (id) => {
-  return axios.delete(`http://localhost:3000/book/deleteBook/${id}`);
+  return del(`/book/deleteBook/${id}`);
 }
 
 // 入库出库的请求
 export const updateCount = (data = {}) => {
-  return axios.post('http://localhost:3000/book/update/count', data);
+  return post('/book/update/count', data);
 }
 
 // 修改书籍的请求
 export const update = (data) => {
-  return axios.post('http://localhost:3000/book/update', data);
+  return post('/book/update', data);
 }
 
 // 详情页的请求
 export const detail = (id) => {
-  return axios.get(`http://localhost:3000/book/detail/${id}`);
+  return get(`/book/detail/${id}`);
 }
 
 // excel批量添加书籍的请求
 export const addMany = (key) => {
-  return axios.post('http://localhost:3000/book/addMany', {
+  return post('/book/addMany', {
     key
   });
 }

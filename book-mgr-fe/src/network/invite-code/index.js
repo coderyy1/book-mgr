@@ -1,23 +1,17 @@
-import axios from 'axios';
+import { del, get } from '@/helpers/request/index';
 
 // 邀请码列表查询的请求
 export const list = (page, size) => {
-  return axios.get('http://localhost:3000/invite/list', {
-    params: {
-      page,
-      size
-    }
+  return get('/invite/list', {
+    page,
+    size
   });
 };
 
 export const add = (count) => {
-  return axios.get('http://localhost:3000/invite/add', {
-    params: {
-      count
-    }
-  });
+  return get('/invite/add', count);
 }
 
 export const remove = (id) => {
-  return axios.delete(`http://localhost:3000/invite/delete/${id}`);
+  return del(`/invite/delete/${id}`);
 }

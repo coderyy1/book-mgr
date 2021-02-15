@@ -72,6 +72,7 @@ export default defineComponent({
           result(res)
             .success((data) => {
               message.success(data.msg);
+              currentPage.value = 1;
               getList();
             });
         }

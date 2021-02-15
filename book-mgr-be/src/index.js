@@ -19,7 +19,7 @@ connect().then(() => {
     }
   }));
   
-  // koaJwtMiddleware(app);
+  koaJwtMiddleware(app);
   // app.use(logMiddleware);
   registerRoutes(app);
 

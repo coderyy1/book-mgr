@@ -1,6 +1,6 @@
-import axios from 'axios';
+import { post } from '@/helpers/request/index';
 
 // 修改密码的请求
 export const update = (data) => {
-  return axios.post('http://localhost:3000/profile/update/password', data);
+  return post('/profile/update/password', data);
 };

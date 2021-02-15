@@ -18,6 +18,13 @@ export default defineComponent({
 
     onMounted(() => {
       selectedKeys.value = [route.path];
+      menu.forEach((item) => {
+        (item.children || []).forEach((child) => {
+          if(child.url === route.path) {
+            openKeys.value.push(item.title);
+          }
+        });
+      });
     });
 
 

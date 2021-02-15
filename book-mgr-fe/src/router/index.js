@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import store from '@/store';
+import { message } from 'ant-design-vue';
 import { getToken } from '@/helpers/token/index';
 
 const routes = [
@@ -81,6 +82,7 @@ router.beforeEach(async (to, from, next) => {
   if(to.path !== '/auth') {
     if(!getToken()) {
       next('/auth');
+      message.error('认证失败，请重新登录');
       return;
     }
   }

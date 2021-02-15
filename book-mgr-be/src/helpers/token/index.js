@@ -29,7 +29,8 @@ const middleware = (app) => {
       /^\/auth\/login/,
       /^\/auth\/register/,
       /^\/character\/list/,
-      /^\/forget-password\/add/
+      /^\/forget-password\/add/,
+      /^\/upload\/file/
     ]
   }));
 }
